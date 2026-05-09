@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ChrisMASS | Massage Premium & Kinésithérapie Esthétique | Galerie Présidentielle Gombe</title>
+    <!-- SEO Meta -->
+    <meta name="description" content="ChrisMASS - Expérience de massage premium à la Galerie Présidentielle à Gombe. Offrez à votre corps et esprit un bien-être absolu avec nos séances de relaxation profonde et kinésithérapie esthétique. 85$/mois pour 2h/semaine.">
+    <meta name="keywords" content="massage premium, kinésithérapie esthétique, relaxation, bien-être, spa luxe, Gombe, Galerie Présidentielle">
+    <meta name="author" content="Christian MANDEMBA">
+    <meta property="og:title" content="ChrisMASS - Massage Premium">
+    <meta property="og:description" content="Offrez-vous une expérience de bien-être absolu à Gombe">
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,200;14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #03050A;
+            color: #F5F7FA;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor Premium */
+        .custom-cursor {
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #E6C45E, #D4AF37);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.08s ease;
+            box-shadow: 0 0 18px rgba(212, 175, 55, 0.9);
+        }
+        .cursor-follower {
+            width: 45px;
+            height: 45px;
+            border: 1.8px solid rgba(212, 175, 55, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            backdrop-filter: blur(3px);
+        }
+
+        /* Glassmorphism Premium */
+        .glass-card {
+            background: rgba(8, 12, 22, 0.7);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.6);
+        }
+
+        .glass-card-deep {
+            background: rgba(3, 6, 15, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 2rem;
+        }
+
+        .gold-glow {
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.7), 0 0 4px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-premium {
+            background: linear-gradient(135deg, #D4AF37, #B88D2A);
+            border: none;
+            color: #0A0F18;
+            font-weight: 700;
+            padding: 1rem 2.4rem;
+            border-radius: 3rem;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 10px 25px -8px rgba(212, 175, 55, 0.4);
+            letter-spacing: 0.5px;
+        }
+        .btn-premium:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 35px -8px rgba(212, 175, 55, 0.7);
+            background: linear-gradient(135deg, #E6C45E, #D4AF37);
+            color: #000000;
+        }
+
+        .btn-outline-gold {
+            border: 1.5px solid #D4AF37;
+            background: transparent;
+            color: #D4AF37;
+            border-radius: 3rem;
+            padding: 0.8rem 2rem;
+            transition: all 0.3s;
+        }
+        .btn-outline-gold:hover {
+            background: #D4AF37;
+            color: #0A0F18;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050A12; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+
+        section {
+            padding: 110px 0;
+            position: relative;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Service Cards */
+        .service-card {
+            background: rgba(6, 10, 20, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 1.8rem;
+            padding: 2rem 1.5rem;
+            transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            cursor: pointer;
+        }
+        .service-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(212, 175, 55, 0.8);
+            box-shadow: 0 35px 45px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.25);
+        }
+
+        /* Countdown */
+        .countdown-premium {
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            padding: 1rem 2rem;
+            font-family: 'Inter', monospace;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        /* Gallery */
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 1.5rem;
+            transition: all 0.5s;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .gallery-item::after {
+            content: '✦';
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            color: #D4AF37;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Testimonial */
+        .testimonial-card {
+            background: rgba(10, 16, 26, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            padding: 2rem;
+            border-left: 5px solid #D4AF37;
+            transition: 0.3s;
+        }
+
+        /* Form */
+        .form-control-premium {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: white;
+            border-radius: 1rem;
+            padding: 0.9rem;
+            transition: all 0.2s;
+        }
+        .form-control-premium:focus {
+            background: rgba(0, 0, 0, 0.7);
+            border-color: #D4AF37;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section { padding: 70px 0; }
+            .hero h1 { font-size: 2.5rem; }
+            .countdown-premium { font-size: 1rem; padding: 0.8rem 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg fixed-top py-3" style="background: rgba(0,0,0,0.7); backdrop-filter: blur(22px); border-bottom: 1px solid rgba(212,175,55,0.4); z-index: 1000;">
+        <div class="container">
+            <a class="navbar-brand text-white fw-bold fs-2" href="#" style="letter-spacing: -1px;">Chris<span style="color: #D4AF37;">MASS</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto gap-3">
+                    <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#about">Philosophie</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#services">Rituels</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#offre">Offre Prestige</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#weekend">Week-end Sacré</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#contact">Accès</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO 3D -->
+    <div class="hero d-flex align-items-center" id="home">
+        <canvas id="hero-canvas"></canvas>
+        <div class="container hero-content text-center text-white">
+            <div class="badge bg-dark text-gold px-4 py-2 rounded-pill mb-4" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);">✦ Bien-être d'exception ✦</div>
+            <h1 class="display-1 fw-bold" style="animation: fadeUp 1s ease-out;">Prenez soin de vous,<br><span id="animated-text" class="gold-glow" style="color:#D4AF37;">vous le méritez.</span></h1>
+            <p class="lead mt-4 fs-2 opacity-85">Offrez à votre corps et à votre esprit une expérience de bien-être absolu.</p>
+            <a href="#contact" class="btn btn-premium mt-5 btn-lg rounded-pill px-5 py-3 fs-5"><i class="fas fa-calendar-alt me-2"></i> Réserver maintenant</a>
+        </div>
+        <div style="position: absolute; bottom: 30px; left: 0; right: 0; text-align: center; z-index: 3; animation: bounce 2s infinite;">
+            <i class="fas fa-chevron-down text-gold fa-2x" style="color:#D4AF37;"></i>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <span class="badge bg-dark px-4 py-2 rounded-pill mb-3" style="background:#0A0F1A; color:#D4AF37;">✦ Notre essence ✦</span>
+                    <h2 class="display-4 fw-semibold">Une symphonie de <span style="color:#D4AF37;">relaxation</span> et d'élégance</h2>
+                    <p class="mt-4 fs-5 text-light-emphasis">ChrisMASS incarne le luxe silencieux. Chaque massage, chaque soin de kinésithérapie esthétique est une invitation à la renaissance. Dans notre écrin de la Galerie Présidentielle, nous fusionnons techniques intuitives et science du corps pour éliminer stress, restaurer l'énergie et harmoniser l'esprit. Plus qu'un massage, un rituel de reconnexion.</p>
+                    <div class="row mt-5">
+                        <div class="col-md-6 mb-3"><i class="fas fa-feather-alt me-2" style="color:#D4AF37;"></i> Relaxation profonde</div>
+                        <div class="col-md-6 mb-3"><i class="fas fa-brain me-2" style="color:#D4AF37;"></i> Réduction du stress</div>
+                        <div class="col-md-6 mb-3"><i class="fas fa-bolt me-2" style="color:#D4AF37;"></i> Énergie vitale</div>
+                        <div class="col-md-6 mb-3"><i class="fas fa-heartbeat me-2" style="color:#D4AF37;"></i> Équilibre émotionnel</div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="glass-card p-5 text-center">
+                        <i class="fas fa-quote-right fa-4x mb-4" style="color:#D4AF37;"></i>
+                        <p class="fs-3 fst-italic">"Le soin que vous vous offrez est le plus précieux des luxes. Ici, chaque geste est une caresse pour l'âme."</p>
+                        <hr class="bg-gold w-25 mx-auto">
+                        <p class="mt-3 fs-5 fw-semibold">— Christian MANDEMBA, Fondateur</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" style="background: radial-gradient(circle at 20% 30%, #070C16, #010205);">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge bg-dark px-4 py-2 rounded-pill" style="background:#0A0F1A; color:#D4AF37;">Rituels d'exception</span>
+                <h2 class="display-4 mt-3">Prestations <span style="color:#D4AF37;">Signature</span></h2>
+                <p class="fs-5 opacity-75">Des soins sur mesure, pensés pour votre transformation</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4"><div class="service-card text-center h-100"><i class="fas fa-spa fa-3x mb-3" style="color:#D4AF37;"></i><h3>Massage Relaxant</h3><p>Modelages enveloppants, huiles précieuses, libération des tensions profondes.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="service-card text-center h-100"><i class="fas fa-hand-holding-heart fa-3x mb-3" style="color:#D4AF37;"></i><h3>Kinésithérapie Esthétique</h3><p>Techniques remodelantes, drainage lymphatique, peau sublimée.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="service-card text-center h-100"><i class="fas fa-moon fa-3x mb-3" style="color:#D4AF37;"></i><h3>Relaxation Profonde</h3><p>Bain sonore, pierres chaudes, lâcher-prise absolu.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="service-card text-center h-100"><i class="fas fa-dumbbell fa-3x mb-3" style="color:#D4AF37;"></i><h3>Bien-être Musculaire</h3><p>Récupération sportive, étirements, régénération cellulaire.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="service-card text-center h-100"><i class="fas fa-cloud-sun fa-3x mb-3" style="color:#D4AF37;"></i><h3>Réduction du Stress</h3><p>Protocole anti-anxiété, points énergétiques, méditation guidée.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="service-card text-center h-100"><i class="fas fa-gem fa-3x mb-3" style="color:#D4AF37;"></i><h3>Rituel Signature 2H</h3><p>Massage profond + soin esthétique, ultimate expérience premium.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OFFRE SPÉCIALE 85$ -->
+    <section id="offre">
+        <div class="container">
+            <div class="glass-card p-5 text-center position-relative overflow-hidden">
+                <div class="position-absolute top-0 start-0 w-100 h-100" style="background: radial-gradient(circle at 30% 20%, rgba(212,175,55,0.1), transparent);"></div>
+                <span class="badge bg-gold text-dark px-4 py-2 rounded-pill mb-3" style="background:#D4AF37; color:#0A0F18;">✨ Abonnement Prestige ✨</span>
+                <h2 class="display-3 fw-bold"><span style="color:#D4AF37;">85$ USD</span> / MOIS</h2>
+                <p class="fs-2 mt-2 fw-semibold">1 séance de 2 heures chaque semaine</p>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-md-9">
+                        <p class="fs-5">Offrez-vous une évasion hebdomadaire. Les massages du week-end permettent de réduire le cortisol, améliorer la circulation sanguine, libérer les tensions musculaires accumulées et favoriser un sommeil profond. Vous attaquez la semaine avec une clarté mentale et une énergie renouvelée.</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center gap-4 flex-wrap mt-4 fs-5">
+                    <span><i class="fas fa-bed text-gold"></i> Sommeil réparateur</span>
+                    <span><i class="fas fa-charging-station text-gold"></i> Énergie vitale</span>
+                    <span><i class="fas fa-smile text-gold"></i> Clarté mentale</span>
+                    <span><i class="fas fa-heart text-gold"></i> Bien-être cardiaque</span>
+                </div>
+                <div class="mt-5">
+                    <div id="countdownBox" class="countdown-premium d-inline-flex gap-3 p-3 mt-2"></div>
+                </div>
+                <a href="#contact" class="btn btn-premium mt-5 px-5 py-3 rounded-pill fs-5"><i class="fas fa-gem me-2"></i> Je réserve mon rituel</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WEEK-END SECTION IMMERSIVE -->
+    <section id="weekend" style="background: linear-gradient(125deg, #02050C, #0B1120);">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="glass-card-deep p-4 p-lg-5">
+                        <h2 class="display-4"><span class="gold-glow">Samedi & Dimanche</span><br> Votre moment de renaissance</h2>
+                        <p class="lead mt-3">Un sanctuaire dédié aux rituels du week-end. Laissez les soucis s'évaporer, offrez-vous un voyage intérieur. Nos mains expertes et l'atmosphère envoûtante réparent les fatigues profondes et vous reconnectent à l'essentiel.</p>
+                        <div class="mt-5">
+                            <div class="d-flex gap-4">
+                                <div><i class="fas fa-candle fa-2x" style="color:#D4AF37;"></i><p class="mt-2">Ambiance lumières tamisées</p></div>
+                                <div><i class="fas fa-feather-alt fa-2x" style="color:#D4AF37;"></i><p class="mt-2">Toucher coton & soie</p></div>
+                                <div><i class="fas fa-water fa-2x" style="color:#D4AF37;"></i><p class="mt-2">Huiles essentielles rares</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-4 mt-lg-0">
+                    <div class="position-relative">
+                        <img src="https://images.pexels.com/photos/3822284/pexels-photo-3822284.jpeg?auto=compress&cs=tinysrgb&w=800" class="img-fluid rounded-4 shadow-lg" alt="Luxury Spa" style="border: 2px solid rgba(212,175,55,0.4);">
+                        <div class="glass-card p-3 position-absolute bottom-0 start-0 translate-middle-y ms-3 d-none d-md-block" style="width: auto; background: rgba(0,0,0,0.6);">
+                            <i class="fas fa-clock text-gold"></i> Séances de 2h sur mesure
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERIE PREMIUM -->
+    <section id="gallery">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4">Élégance en <span style="color:#D4AF37;">images</span></h2>
+                <p class="fs-5">Plongez dans l'atmosphère de notre institut d'exception</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 gallery-item"><img src="https://images.pexels.com/photos/4195823/pexels-photo-4195823.jpeg?auto=compress&cs=tinysrgb&w=600" alt="massage calme"></div>
+                <div class="col-md-4 gallery-item"><img src="https://images.pexels.com/photos/3757657/pexels-photo-3757657.jpeg?auto=compress&cs=tinysrgb&w=600" alt="spa zen"></div>
+                <div class="col-md-4 gallery-item"><img src="https://images.pexels.com/photos/3822284/pexels-photo-3822284.jpeg?auto=compress&cs=tinysrgb&w=600" alt="bougies relax"></div>
+                <div class="col-md-4 gallery-item"><img src="https://images.pexels.com/photos/4056538/pexels-photo-4056538.jpeg?auto=compress&cs=tinysrgb&w=600" alt="huile massage"></div>
+                <div class="col-md-4 gallery-item"><img src="https://images.pexels.com/photos/4262174/pexels-photo-4262174.jpeg?auto=compress&cs=tinysrgb&w=600" alt="relaxation"></div>
+                <div class="col-md-4 gallery-item"><img src="https://images.pexels.com/photos/3766374/pexels-photo-3766374.jpeg?auto=compress&cs=tinysrgb&w=600" alt="luxe institut"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TÉMOIGNAGES -->
+    <section style="background: #03060C;">
+        <div class="container">
+            <div class="text-center"><h2 class="display-4">Ils ont <span style="color:#D4AF37;">ressenti</span> la différence</h2></div>
+            <div class="row mt-5 g-4">
+                <div class="col-md-4"><div class="testimonial-card"><i class="fas fa-star text-gold mb-2"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><p class="mt-3">"Un sanctuaire de paix. Chaque séance est un voyage sensoriel. La kinésithérapie esthétique m'a redonné confiance."</p><h6>— Élise D., cadre</h6></div></div>
+                <div class="col-md-4"><div class="testimonial-card"><i class="fas fa-star text-gold"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><p>"Le massage du week-end est devenu mon rituel irremplaçable. Mon sommeil s'est métamorphosé."</p><h6>— Sandrine M.</h6></div></div>
+                <div class="col-md-4"><div class="testimonial-card"><i class="fas fa-star text-gold"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><p>"Discrétion, élégance, professionnalisme absolu. Je ressors légère comme jamais."</p><h6>— Laura K.</h6></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT + FORMULAIRE WHATSAPP -->
+    <section id="contact">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-5">
+                    <div class="glass-card p-4 h-100">
+                        <h3><i class="fas fa-map-pin me-2" style="color:#D4AF37;"></i> Notre Écrin</h3>
+                        <p class="mt-3 fs-5"><strong>Galerie Présidentielle</strong><br> Gombe, Kinshasa<br>République Démocratique du Congo</p>
+                        <hr class="bg-gold opacity-25">
+                        <p><i class="fas fa-phone-alt me-2" style="color:#D4AF37;"></i> <strong>+243 985 245 786</strong></p>
+                        <p><i class="fab fa-whatsapp me-2" style="color:#25D366;"></i> Réservation & Information</p>
+                        <a href="https://wa.me/243985245786" class="btn btn-outline-gold w-100 mt-3 py-2"><i class="fab fa-whatsapp me-2"></i> WhatsApp direct</a>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="glass-card p-4">
+                        <h4 class="mb-3"><i class="fas fa-envelope-open-text me-2" style="color:#D4AF37;"></i> Formulaire de réservation</h4>
+                        <p>Remplissez ce formulaire et recevez une confirmation immédiate sur WhatsApp.</p>
+                        <form id="whatsappForm">
+                            <div class="row g-3">
+                                <div class="col-md-6"><input type="text" id="name" class="form-control form-control-premium" placeholder="Votre nom complet" required></div>
+                                <div class="col-md-6"><input type="tel" id="phone" class="form-control form-control-premium" placeholder="Votre téléphone (WhatsApp)" required></div>
+                                <div class="col-12"><select id="serviceSelect" class="form-control form-control-premium"><option value="Massage Relaxant">Massage Relaxant</option><option value="Kinésithérapie Esthétique">Kinésithérapie Esthétique</option><option value="Relaxation Profonde">Relaxation Profonde</option><option value="Offre 85$/mois">Offre 85$/mois (2h/semaine)</option></select></div>
+                                <div class="col-12"><textarea id="message" rows="3" class="form-control form-control-premium" placeholder="Message ou préférence de date (ex: samedi 15h)" required></textarea></div>
+                                <div class="col-12"><button type="submit" class="btn btn-premium w-100 py-3"><i class="fab fa-whatsapp me-2"></i> Envoyer & être rappelée sur WhatsApp</button></div>
+                            </div>
+                        </form>
+                        <p class="small text-muted mt-4 text-center"><i class="fas fa-lock"></i> Vos informations sont confidentielles. Réponse sous 20min.</p>
+                    </div>
+                    <div class="mt-4">
+                        <iframe class="w-100 rounded-4" height="280" style="border:0; filter: brightness(0.85) contrast(1.1); border-radius: 1.5rem;" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.81629595187!2d15.2817208!3d-4.3060899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a3185090f1db9%3A0xb0f5b6b3b9a8b7d!2sGombe%2C%20Kinshasa!5e0!3m2!1sfr!2scd!4v1700000000000!5m2!1sfr!2scd"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="pt-5 pb-4 mt-3 border-top border-secondary">
+        <div class="container text-center">
+            <h2 class="fw-bold">Chris<span style="color:#D4AF37;">MASS</span></h2>
+            <p class="fst-italic fs-5 mt-2">"L'élégance suprême est le bien-être intérieur."</p>
+            <div class="d-flex justify-content-center gap-4 mt-3">
+                <a href="#" class="text-gold fs-3"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gold fs-3"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gold fs-3"><i class="fab fa-x-twitter"></i></a>
+            </div>
+            <p class="mt-4 small text-muted">© 2026 ChrisMASS – Conçu par Christian MANDEMBA – Massage Premium & Kinésithérapie Esthétique – Galerie Présidentielle Gombe</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Lenis smooth scroll
+        const lenis = new Lenis({ lerp: 0.08, wheelMultiplier: 0.7 });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add(time => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // Cursor
+        const cursor = document.querySelector('.custom-cursor');
+        const follower = document.querySelector('.cursor-follower');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX - 5, y: e.clientY - 5, duration: 0.08 });
+            gsap.to(follower, { x: e.clientX - 22, y: e.clientY - 22, duration: 0.2 });
+        });
+
+        // 3D Particles Hero
+        const canvas = document.getElementById('hero-canvas');
+        const scene = new THREE.Scene();
+        scene.background = null;
+        const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        const particlesGeo = new THREE.BufferGeometry();
+        const count = 2200;
+        const positions = new Float32Array(count * 3);
+        for (let i = 0; i < count; i++) {
+            positions[i*3] = (Math.random() - 0.5) * 26;
+            positions[i*3+1] = (Math.random() - 0.5) * 15;
+            positions[i*3+2] = (Math.random() - 0.5) * 20 - 10;
+        }
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleMat = new THREE.PointsMaterial({ color: 0xd4af37, size: 0.09, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending });
+        const stars = new THREE.Points(particlesGeo, particleMat);
+        scene.add(stars);
+        camera.position.z = 6;
+        let t = 0;
+        function animateStars() {
+            requestAnimationFrame(animateStars);
+            t += 0.002;
+            stars.rotation.y = t * 0.15;
+            stars.rotation.x = Math.sin(t * 0.2) * 0.1;
+            renderer.render(scene, camera);
+        }
+        animateStars();
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // GSAP Scroll Animations
+        gsap.fromTo(".hero h1", { opacity: 0, y: 70 }, { opacity: 1, y: 0, duration: 1.2, delay: 0.5, ease: "power3.out" });
+        gsap.fromTo(".hero p", { opacity: 0 }, { opacity: 0.9, duration: 1, delay: 0.9 });
+        gsap.fromTo(".btn-premium", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, delay: 1.2 });
+
+        gsap.utils.toArray("section").forEach(section => {
+            gsap.from(section, {
+                scrollTrigger: { trigger: section, start: "top 85%", toggleActions: "play none none reverse" },
+                opacity: 0, y: 45, duration: 0.8, ease: "power2.out"
+            });
+        });
+
+        // Countdown for weekend offer
+        function startCountdown() {
+            const target = new Date();
+            target.setDate(target.getDate() + ((6 - target.getDay() + 7) % 7) + 7);
+            target.setHours(23, 59, 59, 0);
+            const interval = setInterval(() => {
+                const now = new Date();
+                const diff = target - now;
+                if (diff <= 0) { document.getElementById('countdownBox').innerHTML = `<span>✨ Offre disponible ce week-end ✨</span>`; clearInterval(interval); return; }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hrs = Math.floor((diff % (86400000)) / 3600000);
+                const mins = Math.floor((diff % 3600000) / 60000);
+                const secs = Math.floor((diff % 60000) / 1000);
+                document.getElementById('countdownBox').innerHTML = `<span class="text-gold"><i class="fas fa-hourglass-half"></i> J-${days} ${hrs}h ${mins}m ${secs}s avant expiration offre hebdomadaire</span>`;
+            }, 1000);
+        }
+        startCountdown();
+
+        // FORM SUBMIT TO WHATSAPP
+        document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const service = document.getElementById('serviceSelect').value;
+            const msg = document.getElementById('message').value.trim();
+            if (!name || !phone) {
+                alert("Veuillez entrer votre nom et numéro de téléphone.");
+                return;
+            }
+            const whatsappNumber = "243985245786";
+            let text = `*Nouvelle demande ChrisMASS*%0A%0A👤 *Nom:* ${encodeURIComponent(name)}%0A📞 *Téléphone:* ${encodeURIComponent(phone)}%0A✨ *Service souhaité:* ${encodeURIComponent(service)}%0A💬 *Message:* ${encodeURIComponent(msg)}%0A%0A📍 Galerie Présidentielle - Gombe`;
+            const url = `https://wa.me/${whatsappNumber}?text=${text}`;
+            window.open(url, '_blank');
+            // Optionnel: afficher notification
+            alert("✓ Votre demande a été préparée. Vous allez être redirigé vers WhatsApp pour confirmer l'envoi. Nous vous répondrons sous quelques minutes.");
+            document.getElementById('whatsappForm').reset();
+        });
+    </script>
+    <style>
+        @keyframes bounce { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(12px); } }
+        .text-gold { color: #D4AF37; }
+        .bg-gold { background: #D4AF37; }
+        .opacity-85 { opacity: 0.85; }
+    </style>
+</body>
+</html>
