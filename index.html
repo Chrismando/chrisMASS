@@ -396,6 +396,258 @@
     }
 
     /* ========================
+       CONTENEUR D'EXPORT PDF CACHÉ
+       ======================== */
+    #pdf-export-container {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      width: 210mm;
+      background: #ffffff;
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      color: #3e3a37;
+      line-height: 1.7;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #pdf-export-container * {
+      box-sizing: border-box;
+    }
+
+    .pdf-page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 20mm 18mm 20mm 18mm;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    .pdf-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #c9a96e;
+    }
+
+    .pdf-header-top .pdf-logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .pdf-header-top .pdf-company-info {
+      text-align: right;
+      font-size: 11px;
+      color: #6b6560;
+      line-height: 1.6;
+    }
+
+    .pdf-header-top .pdf-company-info .pdf-company-name {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #8ba89c;
+      margin-bottom: 4px;
+    }
+
+    .pdf-title-section {
+      text-align: center;
+      margin: 25px 0;
+      padding: 15px 0;
+      border-top: 1px solid #e0d9d2;
+      border-bottom: 1px solid #e0d9d2;
+    }
+
+    .pdf-title-section .pdf-doc-type {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #8ba89c;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .pdf-title-section .pdf-doc-number {
+      font-size: 13px;
+      color: #8c8580;
+      margin-top: 4px;
+    }
+
+    .pdf-info-blocks {
+      display: flex;
+      justify-content: space-between;
+      margin: 25px 0;
+      gap: 30px;
+    }
+
+    .pdf-info-block {
+      flex: 1;
+      padding: 15px;
+      background: #faf8f5;
+      border-radius: 10px;
+      border: 1px solid #e0d9d2;
+    }
+
+    .pdf-info-block h4 {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 16px;
+      color: #8ba89c;
+      margin: 0 0 8px 0;
+      font-weight: 600;
+    }
+
+    .pdf-info-block p {
+      margin: 0;
+      font-size: 11px;
+      color: #3e3a37;
+      line-height: 1.6;
+    }
+
+    .pdf-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 11px;
+    }
+
+    .pdf-table thead th {
+      background: linear-gradient(135deg, #c5d5cb 0%, #a8c3b8 100%);
+      color: #ffffff;
+      padding: 12px 15px;
+      text-align: left;
+      font-weight: 500;
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 14px;
+      border: none;
+    }
+
+    .pdf-table thead th:first-child {
+      border-radius: 8px 0 0 0;
+    }
+
+    .pdf-table thead th:last-child {
+      border-radius: 0 8px 0 0;
+      text-align: right;
+    }
+
+    .pdf-table tbody td {
+      padding: 10px 15px;
+      border-bottom: 1px solid #e0d9d2;
+      background: #ffffff;
+    }
+
+    .pdf-table tbody tr:nth-child(even) td {
+      background: #faf8f5;
+    }
+
+    .pdf-table tbody td:last-child {
+      text-align: right;
+      font-weight: 500;
+    }
+
+    .pdf-table tfoot td {
+      padding: 12px 15px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .pdf-totals-section {
+      margin: 25px 0;
+      padding: 18px 20px;
+      background: #faf8f5;
+      border-radius: 10px;
+      border: 1px solid #e0d9d2;
+    }
+
+    .pdf-totals-section .pdf-total-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 12px;
+    }
+
+    .pdf-totals-section .pdf-total-row.pdf-grand-total {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #8ba89c;
+      border-top: 2px solid #c9a96e;
+      margin-top: 10px;
+      padding-top: 12px;
+    }
+
+    .pdf-notes-section {
+      margin: 20px 0;
+      padding: 15px 18px;
+      background: #faf8f5;
+      border-radius: 10px;
+      border: 1px solid #e0d9d2;
+      font-size: 11px;
+      color: #6b6560;
+    }
+
+    .pdf-notes-section h4 {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 15px;
+      color: #8ba89c;
+      margin: 0 0 6px 0;
+    }
+
+    .pdf-signature-section {
+      margin-top: 30px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .pdf-signature-box {
+      text-align: center;
+      width: 200px;
+    }
+
+    .pdf-signature-box .pdf-signature-line {
+      border-top: 1px solid #8ba89c;
+      margin-top: 40px;
+      padding-top: 8px;
+      font-size: 11px;
+      color: #8c8580;
+    }
+
+    .pdf-signature-image {
+      max-width: 180px;
+      max-height: 60px;
+      margin-bottom: 5px;
+    }
+
+    .pdf-footer {
+      margin-top: 25px;
+      padding-top: 15px;
+      border-top: 1px solid #e0d9d2;
+      text-align: center;
+      font-size: 10px;
+      color: #8c8580;
+    }
+
+    .pdf-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-25deg);
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 80px;
+      color: rgba(168, 195, 184, 0.06);
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 0;
+    }
+
+    /* ========================
        RESPONSIVE SPA
        ======================== */
     @media (max-width: 1200px) {
@@ -554,6 +806,15 @@
           Chris'MASS
         </h1>
       </div>
+    </div>
+  </div>
+
+  <!-- =========================
+       CONTENEUR D'EXPORT PDF (CACHÉ)
+       ========================= -->
+  <div id="pdf-export-container">
+    <div class="pdf-page" id="pdf-page-content">
+      <!-- Le contenu sera généré dynamiquement par JS -->
     </div>
   </div>
 
@@ -740,8 +1001,8 @@
             <tr class="item-row">
               <td><input class="item-desc form-control" value="Massage relaxant aux huiles essentielles" /></td>
               <td><input class="item-qty form-control" type="number" min="0" step="1" value="1" /></td>
-              <td><input class="item-price form-control" type="number" min="0" step="0.01" value="85.00" /></td>
-              <td class="item-line-total">85.00</td>
+              <td><input class="item-price form-control" type="number" min="0" step="0.01" value="85000" /></td>
+              <td class="item-line-total">85000.00</td>
               <td><button class="btn-remove-line btn btn-sm btn-danger" type="button" aria-label="Supprimer la ligne">✕</button></td>
             </tr>
           </tbody>
@@ -752,7 +1013,7 @@
 
         <div class="mt-4">
           <label for="notes" class="fw-bold">📝 Notes & Conditions</label>
-          <textarea id="notes" class="form-control" rows="4" placeholder="Conditions de paiement, remarques particulières, contre-indications...">Paiement à réception. Merci de prévenir 24h à l'avance pour toute annulation. Les soins sont adaptés à votre morphologie.</textarea>
+          <textarea id="notes" class="form-control" rows="4" placeholder="Conditions de paiement, remarques particulières, contre-indications...">Paiement à réception. Merci de prévenir 24h à l'avance pour toute annulation. Les soins sont adaptés à votre morphologie. Paiement possible en espèces, mobile money ou virement bancaire.</textarea>
         </div>
 
         <div class="mt-4">
@@ -912,7 +1173,7 @@
             contact: ''
         },
         items: [
-            { description: 'Massage relaxant aux huiles essentielles', quantity: 1, price: 85.00 }
+            { description: 'Massage relaxant aux huiles essentielles', quantity: 1, price: 85000 }
         ],
         signature: null,
         theme: 'spa'
@@ -926,8 +1187,8 @@
             name: 'Massage Relaxant',
             type: 'Facture',
             items: [
-                { description: 'Massage relaxant aux huiles essentielles (60 min)', quantity: 1, price: 85 },
-                { description: 'Accès au sauna et hammam', quantity: 1, price: 25 },
+                { description: 'Massage relaxant aux huiles essentielles (60 min)', quantity: 1, price: 85000 },
+                { description: 'Accès au sauna et hammam', quantity: 1, price: 25000 },
                 { description: 'Tisane bien-être offerte', quantity: 1, price: 0 }
             ],
             notes: 'Paiement à réception. Annulation gratuite 24h à l\'avance. Les huiles essentielles sont bio et adaptées à votre peau.',
@@ -937,9 +1198,9 @@
             name: 'Soin Visage Premium',
             type: 'Devis',
             items: [
-                { description: 'Soin visage hydratant profond (45 min)', quantity: 1, price: 65 },
-                { description: 'Modelage du visage aux pierres chaudes', quantity: 1, price: 40 },
-                { description: 'Masque à l\'argile rose et sérum anti-âge', quantity: 1, price: 55 }
+                { description: 'Soin visage hydratant profond (45 min)', quantity: 1, price: 65000 },
+                { description: 'Modelage du visage aux pierres chaudes', quantity: 1, price: 40000 },
+                { description: 'Masque à l\'argile rose et sérum anti-âge', quantity: 1, price: 55000 }
             ],
             notes: 'Devis valable 30 jours. Produits certifiés bio et cruelty-free. Consultation préalable offerte.',
             taxRate: 16
@@ -948,7 +1209,7 @@
             name: 'Forfait Bien-Être',
             type: 'Facture',
             items: [
-                { description: 'Forfait demi-journée (3 soins au choix)', quantity: 1, price: 180 },
+                { description: 'Forfait demi-journée (3 soins au choix)', quantity: 1, price: 180000 },
                 { description: 'Déjeuner detox inclus', quantity: 1, price: 0 },
                 { description: 'Accès illimité aux installations', quantity: 1, price: 0 }
             ],
@@ -1177,7 +1438,7 @@
                 addItemRow(item.description, item.quantity, item.price);
             });
         } else {
-            addItemRow('Massage relaxant aux huiles essentielles', 1, 85.00);
+            addItemRow('Massage relaxant aux huiles essentielles', 1, 85000);
         }
         
         updatePreview();
@@ -1522,6 +1783,192 @@
     }
 
     /* ========================
+       GÉNÉRATION DU CONTENU PDF COMPLET
+       ======================== */
+    function generatePDFContent(data) {
+        const currency = data.currency;
+        const currencySymbol = currency === 'CDF' ? 'FC' : currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency;
+        
+        let subtotal = 0;
+        let itemsRows = '';
+        
+        data.items.forEach((item, index) => {
+            const lineTotal = item.quantity * item.price;
+            subtotal += lineTotal;
+            const bgColor = index % 2 === 0 ? '#ffffff' : '#faf8f5';
+            itemsRows += `
+                <tr>
+                    <td style="background:${bgColor};">${item.description}</td>
+                    <td style="background:${bgColor}; text-align:center;">${item.quantity}</td>
+                    <td style="background:${bgColor}; text-align:right;">${item.price.toLocaleString('fr-FR')} ${currencySymbol}</td>
+                    <td style="background:${bgColor}; text-align:right; font-weight:600;">${lineTotal.toLocaleString('fr-FR')} ${currencySymbol}</td>
+                </tr>
+            `;
+        });
+        
+        const taxRate = data.taxRate;
+        const vatAmount = subtotal * (taxRate / 100);
+        const finalTotal = subtotal + vatAmount;
+        
+        // Récupérer la signature
+        const sigCanvas = document.getElementById('signature-pad');
+        const sigDataUrl = sigCanvas.toDataURL('image/png');
+        const hasSignature = sigCanvas.getContext('2d').getImageData(0, 0, sigCanvas.width, sigCanvas.height).data.some(channel => channel !== 0);
+        
+        const signatureHTML = hasSignature ? 
+            `<img src="${sigDataUrl}" alt="Signature" class="pdf-signature-image" />` : 
+            '';
+        
+        const dateFormatted = new Date(data.docDate).toLocaleDateString('fr-FR', {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+        
+        return `
+            <div class="pdf-watermark">Chris'MASS</div>
+            
+            <!-- En-tête avec logo -->
+            <div class="pdf-header-top">
+                <div>
+                    <img src="massage.png" alt="Chris'MASS Logo" class="pdf-logo" onerror="this.style.display='none'" />
+                </div>
+                <div class="pdf-company-info">
+                    <div class="pdf-company-name">Chris'MASS</div>
+                    <div>Galerie Présidentielle, Gombe, Kinshasa</div>
+                    <div>+243 985 245 786</div>
+                    <div>contact@chrismass-spa.cd</div>
+                </div>
+            </div>
+            
+            <!-- Titre du document -->
+            <div class="pdf-title-section">
+                <h1 class="pdf-doc-type">${data.docType.toUpperCase()}</h1>
+                <div class="pdf-doc-number">N° ${data.docNumber} — Date : ${dateFormatted}</div>
+            </div>
+            
+            <!-- Blocs d'informations -->
+            <div class="pdf-info-blocks">
+                <div class="pdf-info-block">
+                    <h4>🌸 De</h4>
+                    <p><strong>${data.fromName}</strong></p>
+                    <p>${data.fromAddress}</p>
+                    <p>${data.fromContact}</p>
+                </div>
+                <div class="pdf-info-block">
+                    <h4>👤 À</h4>
+                    <p><strong>${data.toName || 'Client(e)'}</strong></p>
+                    <p>${data.toAddress || '—'}</p>
+                    <p>${data.toContact || '—'}</p>
+                </div>
+            </div>
+            
+            <!-- Tableau des prestations -->
+            <table class="pdf-table">
+                <thead>
+                    <tr>
+                        <th style="width:45%;">Description</th>
+                        <th style="width:12%; text-align:center;">Qté</th>
+                        <th style="width:20%; text-align:right;">Prix unitaire</th>
+                        <th style="width:23%; text-align:right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${itemsRows}
+                </tbody>
+            </table>
+            
+            <!-- Totaux -->
+            <div class="pdf-totals-section">
+                <div class="pdf-total-row">
+                    <span>Sous-total</span>
+                    <span>${subtotal.toLocaleString('fr-FR')} ${currencySymbol}</span>
+                </div>
+                <div class="pdf-total-row">
+                    <span>TVA (${taxRate}%)</span>
+                    <span>${vatAmount.toLocaleString('fr-FR')} ${currencySymbol}</span>
+                </div>
+                <div class="pdf-total-row pdf-grand-total">
+                    <span>Total ${data.docType}</span>
+                    <span>${finalTotal.toLocaleString('fr-FR')} ${currencySymbol}</span>
+                </div>
+            </div>
+            
+            <!-- Notes -->
+            ${data.notes ? `
+            <div class="pdf-notes-section">
+                <h4>📝 Notes & Conditions</h4>
+                <p>${data.notes.replace(/\n/g, '<br>')}</p>
+            </div>
+            ` : ''}
+            
+            <!-- Signature -->
+            <div class="pdf-signature-section">
+                <div class="pdf-signature-box">
+                    ${signatureHTML}
+                    <div class="pdf-signature-line">Signature</div>
+                </div>
+            </div>
+            
+            <!-- Pied de page -->
+            <div class="pdf-footer">
+                Chris'MASS — Galerie Présidentielle, Gombe, Kinshasa — +243 985 245 786<br>
+                Document généré le ${new Date().toLocaleDateString('fr-FR')} — Valable sans signature électronique
+            </div>
+        `;
+    }
+
+    /* ========================
+       EXPORT PDF COMPLET
+       ======================== */
+    async function exportPDF() {
+        const documentData = getCurrentDocumentData();
+        documentHistory.addDocument(documentData);
+        renderHistory();
+        
+        // Générer le contenu dans le conteneur caché
+        const pdfContainer = document.getElementById('pdf-export-container');
+        const pdfPage = document.getElementById('pdf-page-content');
+        pdfPage.innerHTML = generatePDFContent(documentData);
+        
+        // Attendre un court instant pour le rendu
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Capturer avec html2canvas
+        const canvas = await html2canvas(pdfPage, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff',
+            logging: false
+        });
+        
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        
+        // Ajouter l'image en pleine page
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+        
+        // Vérifier si le contenu dépasse une page
+        const imgHeight = canvas.height * pdfWidth / canvas.width;
+        if (imgHeight > pdfHeight) {
+            // Ajouter des pages supplémentaires si nécessaire
+            let heightLeft = imgHeight;
+            let position = 0;
+            
+            while (heightLeft > 0) {
+                position = heightLeft - pdfHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight, undefined, 'FAST');
+                heightLeft -= pdfHeight;
+            }
+        }
+        
+        pdf.save(`ChrisMASS-${documentData.docNumber}.pdf`);
+        showNotification('✅ PDF exporté avec succès — Facture complète !', 'success');
+    }
+
+    /* ========================
        PAD DE SIGNATURE SPA
        ======================== */
     const sigPad = document.getElementById('signature-pad');
@@ -1545,7 +1992,7 @@
         sigCtx.lineWidth = 3;
         sigCtx.lineCap = 'round';
         sigCtx.lineJoin = 'round';
-        sigCtx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent');
+        sigCtx.strokeStyle = '#8ba89c';
         
         sigCtx.lineTo(
             e.clientX - rect.left,
@@ -1759,22 +2206,6 @@
     /* ========================
        FONCTIONS D'EXPORT
        ======================== */
-    async function exportPDF() {
-        const documentData = getCurrentDocumentData();
-        documentHistory.addDocument(documentData);
-        renderHistory();
-        
-        const preview = document.getElementById('preview-section');
-        const canvas = await html2canvas(preview, {scale: 2});
-        const img = canvas.toDataURL('image/png');
-        const pdf = new jspdf.jsPDF('p','mm','a4');
-        const width = pdf.internal.pageSize.getWidth();
-        const height = canvas.height * width / canvas.width;
-        pdf.addImage(img, 'PNG', 0, 0, width, height);
-        pdf.save(`ChrisMASS-${documentData.docNumber}.pdf`);
-        showNotification('PDF exporté avec succès', 'success');
-    }
-
     document.getElementById('btn-export-pdf').onclick = exportPDF;
 
     document.getElementById('btn-share').onclick = async ()=>{
